@@ -216,12 +216,19 @@ nav ul li a:hover{
     animation:spin2 18s linear infinite;
 }
 
-.avatar{
-    width:320px;
-    height:320px;
-    object-fit:cover;
+.circle{
+    width:450px;
+    height:450px;
     border-radius:50%;
-    filter:drop-shadow(0 0 40px #9333ea);
+    border:3px solid #a855f7;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    box-shadow:
+    0 0 50px rgba(168,85,247,.5),
+    0 0 120px rgba(168,85,247,.2);
 }
 
 /* Sections */
