@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Velmora Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#05010a;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Background Glow */
+.bg{
+    position:fixed;
+    width:100%;
+    height:100%;
+    z-index:-1;
+    overflow:hidden;
+}
+
+.bg::before{
+    content:'';
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:#7b2ff7;
+    filter:blur(180px);
+    opacity:.25;
+    top:-150px;
+    left:-100px;
+}
+
+.bg::after{
+    content:'';
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:#ff0080;
+    filter:blur(180px);
+    opacity:.15;
+    bottom:-150px;
+    right:-100px;
+}
+
+/* Navbar */
+nav{
+    width:100%;
+    padding:25px 8%;
+    position:fixed;
+    top:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    backdrop-filter:blur(15px);
+    background:rgba(255,255,255,0.03);
+    border-bottom:1px solid rgba(255,255,255,0.05);
+    z-index:999;
+}
+
+.logo{
+    font-size:35px;
+    font-weight:800;
+    letter-spacing:4px;
+    background:linear-gradient(to right,#fff,#c084fc);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+nav ul{
+    display:flex;
+    gap:35px;
+    list-style:none;
+}
+
+nav ul li a{
+    color:#bbb;
+    text-decoration:none;
+    transition:.3s;
+}
+
+nav ul li a:hover{
+    color:#c084fc;
+}
+
+/* Hero */
+.hero{
+    min-height:100vh;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:140px 8%;
+    gap:50px;
+}
+
+.hero-left{
+    flex:1;
+    animation:fadeUp 1s ease;
+}
+
+.tag{
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:999px;
+    background:rgba(168,85,247,.15);
+    border:1px solid rgba(168,85,247,.2);
+    color:#d8b4fe;
+    margin-bottom:25px;
+    font-size:14px;
+}
+
+.hero-left h1{
+    font-size:100px;
+    line-height:1;
+    font-weight:800;
+    background:linear-gradient(to right,#fff,#d8b4fe,#9333ea);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero-left h2{
+    margin-top:20px;
+    font-weight:500;
+    color:#c084fc;
+    font-size:32px;
+}
+
+.hero-left p{
+    margin-top:25px;
+    color:#aaa;
+    max-width:550px;
+    line-height:1.9;
+    font-size:17px;
+}
+
+.buttons{
+    margin-top:40px;
+    display:flex;
+    gap:20px;
+}
+
+.buttons a{
+    padding:16px 35px;
+    border-radius:18px;
+    text-decoration:none;
+    transition:.3s;
+    font-weight:600;
+}
+
+.btn1{
+    background:linear-gradient(to right,#9333ea,#c084fc);
+    color:white;
+    box-shadow:0 0 30px rgba(147,51,234,.5);
+}
+
+.btn2{
+    border:1px solid rgba(255,255,255,.1);
+    color:white;
+}
+
+.buttons a:hover{
+    transform:translateY(-5px);
+}
+
+/* Hero Right */
+.hero-right{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    position:relative;
+}
+
+.circle{
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    border:3px solid #a855f7;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:
+    0 0 50px rgba(168,85,247,.5),
+    0 0 120px rgba(168,85,247,.2);
+}
+
+.circle::before{
+    content:'';
+    position:absolute;
+    width:520px;
+    height:520px;
+    border:1px solid rgba(192,132,252,.3);
+    border-radius:50%;
+    animation:spin 12s linear infinite;
+}
+
+.circle::after{
+    content:'';
+    position:absolute;
+    width:600px;
+    height:600px;
+    border:1px solid rgba(192,132,252,.15);
+    border-radius:50%;
+    animation:spin2 18s linear infinite;
+}
+
+.avatar{
+    width:320px;
+    filter:drop-shadow(0 0 40px #9333ea);
+}
+
+/* Sections */
+section{
+    padding:120px 8%;
+}
+
+.section-title{
+    font-size:55px;
+    margin-bottom:50px;
+}
+
+.section-title span{
+    color:#a855f7;
+}
+
+.about{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+}
+
+.card{
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:30px;
+    padding:40px;
+    backdrop-filter:blur(10px);
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(168,85,247,.3);
+}
+
+.card p{
+    color:#aaa;
+    line-height:1.9;
+}
+
+.info{
+    display:grid;
+    gap:20px;
+}
+
+.info-box{
+    display:flex;
+    gap:20px;
+    align-items:center;
+}
+
+.icon{
+    width:60px;
+    height:60px;
+    background:rgba(168,85,247,.1);
+    border-radius:18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#c084fc;
+    font-size:22px;
+}
+
+/* Skills */
+.skills{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.skill-card{
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:25px;
+    padding:40px;
+    text-align:center;
+    transition:.3s;
+}
+
+.skill-card:hover{
+    transform:translateY(-10px);
+    border-color:#9333ea;
+}
+
+.skill-card img{
+    width:70px;
+    margin-bottom:20px;
+}
+
+/* Project */
+.project{
+    display:flex;
+    gap:30px;
+    align-items:center;
+}
+
+.project img{
+    width:300px;
+    border-radius:25px;
+}
+
+.project-info h2{
+    font-size:50px;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 18px;
+    border-radius:999px;
+    background:rgba(168,85,247,.15);
+    color:#d8b4fe;
+    margin-top:15px;
+}
+
+/* Social */
+.socials{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:30px;
+}
+
+.social{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:30px;
+    border-radius:25px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+    text-decoration:none;
+    color:white;
+    transition:.3s;
+}
+
+.social:hover{
+    transform:translateY(-5px);
+    border-color:#9333ea;
+}
+
+.social img{
+    width:70px;
+}
+
+/* Footer */
+footer{
+    padding:40px;
+    text-align:center;
+    color:#777;
+}
+
+/* Animation */
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes spin{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes spin2{
+    from{
+        transform:rotate(360deg);
+    }
+    to{
+        transform:rotate(0deg);
+    }
+}
+
+/* Mobile */
+@media(max-width:900px){
+
+.hero{
+    flex-direction:column;
+    text-align:center;
+}
+
+.hero-left h1{
+    font-size:65px;
+}
+
+.hero-left h2{
+    font-size:25px;
+}
+
+.buttons{
+    justify-content:center;
+}
+
+.circle{
+    width:300px;
+    height:300px;
+}
+
+.circle::before{
+    width:360px;
+    height:360px;
+}
+
+.circle::after{
+    width:420px;
+    height:420px;
+}
+
+.avatar{
+    width:220px;
+}
+
+.about{
+    grid-template-columns:1fr;
+}
+
+.project{
+    flex-direction:column;
+}
+
+.project img{
+    width:100%;
+}
+
+nav ul{
+    display:none;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">VELMORA</div>
+
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#project">Project</a></li>
+        <li><a href="#social">Social</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+
+    <div class="hero-left">
+        <div class="tag">Bot Developer</div>
+
+        <h1>VELMORA</h1>
+
+        <h2>Javascript • Bot Developer</h2>
+
+        <p>
+            I build powerful and intelligent bots
+            with clean code and modern technology.
+        </p>
+
+        <div class="buttons">
+            <a href="#project" class="btn1">View Project</a>
+            <a href="#about" class="btn2">About Me</a>
+        </div>
+    </div>
+
+    <div class="hero-right">
+        <div class="circle">
+            <img class="avatar" src="https://files.catbox.moe/3le0id.png">
+        </div>
+    </div>
+
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+
+    <div style="width:100%">
+
+        <h1 class="section-title">Who is <span>Velmora?</span></h1>
+
+        <div class="about">
+
+            <div class="card">
+                <p>
+                    Saya seorang Bot Developer yang fokus
+                    pada pembuatan bot dengan Javascript.
+                    Saya suka otomasi, efisiensi,
+                    dan menciptakan solusi digital modern.
+                </p>
+            </div>
+
+            <div class="card info">
+
+                <div class="info-box">
+                    <div class="icon">👤</div>
+                    <div>
+                        <h3>Name</h3>
+                        <p>Velmora</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="icon">💻</div>
+                    <div>
+                        <h3>Skill</h3>
+                        <p>Javascript</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="icon">🤖</div>
+                    <div>
+                        <h3>Occupation</h3>
+                        <p>Bot Developer</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+
+    <div style="width:100%">
+
+        <h1 class="section-title">What I <span>Use</span></h1>
+
+        <div class="skills">
+
+            <div class="skill-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">
+                <h2>Javascript</h2>
+            </div>
+
+            <div class="skill-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg">
+                <h2>NodeJS</h2>
+            </div>
+
+            <div class="skill-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg">
+                <h2>Git</h2>
+            </div>
+
+            <div class="skill-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg">
+                <h2>Github</h2>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- PROJECT -->
+<section id="project">
+
+    <div style="width:100%">
+
+        <h1 class="section-title">Featured <span>Project</span></h1>
+
+        <div class="card project">
+
+            <img src="https://files.catbox.moe/1zqq2h.jpg">
+
+            <div class="project-info">
+                <h2>Monarch</h2>
+
+                <div class="badge">Soon</div>
+
+                <p style="margin-top:20px;color:#aaa;">
+                    Deskripsi Projek ( Soon )
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- SOCIAL -->
+<section id="social">
+
+    <div style="width:100%">
+
+        <h1 class="section-title">Connect With <span>Me</span></h1>
+
+        <div class="socials">
+
+            <a href="https://instagram.com/dapp1ww" class="social">
+
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+
+                <div>
+                    <h2>Instagram</h2>
+                    <p>@dapp1ww</p>
+                </div>
+
+            </a>
+
+            <a href="https://tiktok.com/@Velmorchsa" class="social">
+
+                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
+
+                <div>
+                    <h2>Tiktok</h2>
+                    <p>@Velmorchsa</p>
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Velmora. All Rights Reserved.
+</footer>
+</body>
+</html>
