@@ -50,6 +50,8 @@
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 24px;
+            position: relative;
+            z-index: 1;
         }
 
         /* Navbar */
@@ -216,7 +218,10 @@
             font-size: 0.85rem;
         }
 
-        /* Animations */
+        header, main, footer {
+            position: relative;
+            z-index: 1;
+        }
         @keyframes float {
             0% { transform: translateY(0px); }
             100% { transform: translateY(-8px); }
@@ -269,6 +274,19 @@
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+                <div style="margin-bottom: 28px;" data-aos="zoom-in" data-aos-duration="800">
+                    <img src="https://iili.io/BmIuaDJ.jpg" alt="Velmora"
+                        style="
+                            width: 130px;
+                            height: 130px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                            border: 3px solid rgba(168, 85, 247, 0.6);
+                            box-shadow: 0 0 24px rgba(168, 85, 247, 0.45), 0 0 60px rgba(168, 85, 247, 0.15);
+                            display: block;
+                        "
+                    />
+                </div>
                 <div class="badge">✦  based. ✦</div>
                 <h1>Velmora <span class="highlight">—<br>Bot Dev & Creator</span></h1>
                 <div class="keahlian-tag">
@@ -330,6 +348,9 @@
     </div>
 </footer>
 
+<!-- Particle Canvas -->
+<canvas id="particleCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+
 <!-- Scripts -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
@@ -351,6 +372,72 @@
     document.addEventListener('mouseenter', () => {
         cursor.style.opacity = '1';
     });
+
+    // Particle Effect
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const count = 80;
+
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 1.8 + 0.4,
+            speedX: (Math.random() - 0.5) * 0.4,
+            speedY: (Math.random() - 0.5) * 0.4,
+            opacity: Math.random() * 0.6 + 0.2,
+            color: Math.random() > 0.5 ? '168,85,247' : '216,164,255'
+        });
+    }
+
+    function drawParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach((p, i) => {
+            p.x += p.speedX;
+            p.y += p.speedY;
+
+            if (p.x < 0) p.x = canvas.width;
+            if (p.x > canvas.width) p.x = 0;
+            if (p.y < 0) p.y = canvas.height;
+            if (p.y > canvas.height) p.y = 0;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${p.color}, ${p.opacity})`;
+            ctx.fill();
+
+            // draw lines between nearby particles
+            particles.forEach((p2, j) => {
+                if (i === j) return;
+                const dx = p.x - p2.x;
+                const dy = p.y - p2.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 100) {
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.strokeStyle = `rgba(168,85,247,${0.12 * (1 - dist / 100)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            });
+        });
+
+        requestAnimationFrame(drawParticles);
+    }
+
+    drawParticles();
 
     // smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
